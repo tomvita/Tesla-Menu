@@ -94,6 +94,7 @@ static void rebuildUI() {
 
     u16 entries = 0;
     fsdevMountSdmc();
+    std::vector<tsl::elm::ListItem *> temp_list;
     for (const auto &entry : std::filesystem::directory_iterator("sdmc:/switch/.overlays")) {
         if (entry.path().filename() == "ovlmenu.ovl")
             continue;
@@ -118,7 +119,15 @@ static void rebuildUI() {
             return false;
         });
 
-        overlayList->addItem(listEntry);
+        if (name == "Zing") {
+            overlayList->addItem(listEntry);
+            entries++;
+        } else {
+            temp_list.push_back(listEntry);
+        }
+    }
+    for (auto entry : temp_list) {
+        overlayList->addItem(entry);
         entries++;
     }
 
