@@ -126,6 +126,9 @@ static void rebuildUI() {
             temp_list.push_back(listEntry);
         }
     }
+    std::sort(temp_list.begin(), temp_list.end(), [](const auto &a, const auto &b) {
+        return strncmp(a->m_text.c_str(), b->m_text.c_str(), sizeof(a->m_text.c_str())) < 0;
+    });
     for (auto entry : temp_list) {
         overlayList->addItem(entry);
         entries++;
